@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tg.pro.urlshortener.mapper.UrlManagerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tg.pro.urlshortener.model.UrlManager">
+        <id column="id" property="id" />
+        <result column="url" property="url" />
+        <result column="view" property="view" />
+        <result column="remark" property="remark" />
+        <result column="grade" property="grade" />
+        <result column="is_del" property="isDel" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, url, view,grade
+    </sql>
+    
+    <select id="selectBaseInfoById" parameterType="java.lang.String" resultType="com.tg.pro.urlshortener.pojo.vo.UrlBaseVo">
+        SELECT
+        <include refid="Base_Column_List" ></include>
+         FROM tb_url_manager   WHERE id = #{id} AND is_del = 0 limit 1
+    </select>
+
+    <update id="updateUrlBaseVoById" parameterType="com.tg.pro.urlshortener.pojo.vo.UrlBaseVo">
+        UPDATE  tb_url_manager SET view = #{urlBaseVo.view} where id = #{urlBaseVo.id}
+    </update>
+
+</mapper>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>url管理</title>
+</head>
+<link rel="stylesheet" href="/layui/css/layui.css">
+<body>
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer
+            , form = layui.form;
+    });
+</script>
+<ul class="layui-nav layui-bg-green" lay-filter="">
+    <li class="layui-nav-item">短地址管理控制台</li>
+    <li class="layui-nav-item"><a href="/url/index">地址生成</a></li>
+    <li class="layui-nav-item"><a href="/url/view">URl管理</a></li>
+</ul>
+<blockquote class="layui-elem-quote" style="margin-top: 50px;">我的短地址列表(每3分钟更新一次短地址访问次数)</blockquote>
+<!--我的短地址列表-->
+<table class="layui-table"  style="table-layout:fixed">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>短地址</th>
+        <th>访问人数</th>
+        <th>真实地址</th>
+        <th>访问频率</th>
+        <th>备注</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="urlBase,userStat : ${list}">
+        <td th:text="${urlBase.id}"></td>
+        <td  th:text="${urlBase.view}"></td>
+        <td th:text="${urlBase.url}" style="width: 30%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></td>
+        <td  th:text="${urlBase.grade}"></td>
+        <td  th:text="${urlBase.remark}"></td>
+        <td>
+            <a th:href="@{/url/del?(id=${urlBase.id})}" style="cursor: pointer">删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script src="/js/jquery-1.10.2.js"></script>
+<script>
+    function delUrl(id) {
+        console.log(id);
+    }
+
+    // $.ajax({
+    //     url: "/url/del?id=" + id,
+    //     type: "DELETE",
+    //     dataType: "JSON",
+    //     data: JSON.stringify(data.field),
+    //     success: function (res) {
+    //         layui.msg("删除成功");
+    //         //doc.parentNode.remove();
+    //     },
+    //     error: function (res) {
+    //         alert("error" + res.message);
+    //     }
+    // });
+
+</script>
+</body>
+</html>

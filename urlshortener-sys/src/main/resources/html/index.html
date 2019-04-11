@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统地址管理系统</title>
+</head>
+<link rel="stylesheet" href="/layui/css/layui.css">
+<body>
+<script src="/layui/layui.js"></script>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer
+            , form = layui.form;
+    });
+</script>
+
+<ul class="layui-nav layui-bg-green" lay-filter="">
+    <li class="layui-nav-item">短地址管理控制台</li>
+    <li class="layui-nav-item"><a href="/url/index">地址生成</a></li>
+    <li class="layui-nav-item"><a href="/url/view">URl管理</a></li>
+</ul>
+<!--表单-->
+
+<blockquote class="layui-elem-quote" style="margin-top: 50px;">生成定制短地址</blockquote>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">将要生成地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="longUrl" required lay-verify="required" placeholder="URL" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">自定义短地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="userUrl"  placeholder="选填" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">短地址大小</label>
+        <div class="layui-input-inline">
+            <input type="text" name="size" placeholder="选填" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">6 -50 的长度,默认为6</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">URl字符编码</label>
+        <div class="layui-input-block">
+            <select name="unicode" lay-verify="required">
+                <option value="0">UTF-8</option>
+                <option value="1">GBK</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">URl访问程度</label>
+        <div class="layui-input-block">
+            <select name="grade" lay-verify="required">
+                <option value="low">low(低)</option>
+                <option value="middle">middle(中)</option>
+                <option value="high">high(高)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="remark"  placeholder="选填" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script src="/js/jquery-1.10.2.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            $.ajax({
+                url:"/url/generate",
+                type:"POST",
+                dataType:"JSON",
+                data:data.field,
+                success:function (res) {
+                    alert(res.msg);
+                },
+                error:function (res) {
+                    alert(res.msg);
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+
+</body>
+</html>
